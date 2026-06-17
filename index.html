@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-[#FFFBF9]">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>50 Ngày Kỷ Luật Thép - Iron Discipline Challenge</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter & Playfair Display for aesthetic headings -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            lightBg: '#FFF9F6',
+                            card: '#FFFFFF',
+                            accentPink: '#EC4899', // Pink accents
+                            accentYellow: '#F59E0B', // Amber/Yellow accents
+                            success: '#10B981',
+                            danger: '#EF4444',
+                            warning: '#F59E0B'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #FFF9F6;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #F1E2DC;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #E4D0C8;
+        }
+
+        /* Cozy Soft Glassmorphism Panel */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(220, 180, 180, 0.06);
+        }
+
+        /* Aesthetic Text Gradients */
+        .gradient-text-pink-yellow {
+            background: linear-gradient(135deg, #DB2777 0%, #D97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body
+    class="h-full text-slate-800 font-sans antialiased selection:bg-pink-200 selection:text-pink-950 bg-gradient-to-br from-[#FFFBF9] via-[#FFF5F6] to-[#FFFDF0] min-h-screen">
+
+    <div class="min-h-screen flex flex-col justify-between">
+        <!-- MAIN APP WRAPPER -->
+        <div class="flex-1 max-w-7xl w-full mx-auto px-4 py-6 md:py-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- SIDEBAR INFO & NAVIGATION -->
+            <aside class="lg:col-span-3 flex flex-col gap-6">
+                <!-- App Logo / Title (Aesthetic Warm Design) -->
+                <div class="glass-panel rounded-2xl p-5 flex items-center gap-4">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-gradient-to-tr from-pink-400 to-amber-400 flex items-center justify-center text-xl font-black text-white shadow-md shadow-pink-200 shrink-0">
+                        50
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-lg tracking-wider text-slate-800">KỶ LUẬT THÉP</h1>
+                        <p class="text-xs text-slate-500 font-medium">50-Day Soft Discipline</p>
+                    </div>
+                </div>
+
+                <!-- Global Countdown widget -->
+                <div class="glass-panel rounded-2xl p-5 relative overflow-hidden">
+                    <div class="absolute -right-8 -bottom-8 w-24 h-24 bg-pink-100/60 rounded-full blur-2xl"></div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-semibold text-slate-500 tracking-wider uppercase">Thử thách 50
+                            ngày</span>
+                        <span id="badge-challenge-status"
+                            class="px-2 py-0.5 text-[10px] rounded-full font-bold bg-pink-100 text-pink-700 border border-pink-200">Đang
+                            chạy</span>
+                    </div>
+                    <div class="flex items-baseline gap-1">
+                        <span id="days-remaining"
+                            class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-amber-600">--</span>
+                        <span class="text-sm font-medium text-slate-600">ngày còn lại</span>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-pink-100/60 flex justify-between text-xs text-slate-500">
+                        <span>Bắt đầu: <strong id="sidebar-start-date" class="text-slate-700">--/--</strong></span>
+                        <span>Kết thúc: <strong id="sidebar-end-date" class="text-slate-700">--/--</strong></span>
+                    </div>
+                </div>
+
+                <!-- NAVIGATION TABS -->
+                <nav
+                    class="flex flex-row lg:flex-col gap-1.5 p-1.5 bg-pink-50/50 rounded-2xl overflow-x-auto border border-pink-100/30">
+                    <button onclick="switchTab('dashboard')" id="btn-tab-dashboard"
+                        class="tab-btn flex-1 lg:flex-none flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-slate-500 hover:text-pink-600 hover:bg-white/80">
+                        <i class="fa-solid fa-chart-pie text-base"></i>
+                        <span class="hidden md:inline lg:inline">Tổng quan</span>
+                    </button>
+                    <button onclick="switchTab('today')" id="btn-tab-today"
+                        class="tab-btn flex-1 lg:flex-none flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-slate-500 hover:text-pink-600 hover:bg-white/80 relative">
+                        <i class="fa-solid fa-sparkles text-base"></i>
+                        <span class="hidden md:inline lg:inline">Việc hôm nay</span>
+                        <span id="badge-today-count"
+                            class="absolute top-1 right-1 lg:top-auto lg:right-3 bg-pink-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full hidden">0</span>
+                    </button>
+                    <button onclick="switchTab('calendar')" id="btn-tab-calendar"
+                        class="tab-btn flex-1 lg:flex-none flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-slate-500 hover:text-pink-600 hover:bg-white/80">
+                        <i class="fa-solid fa-calendar-days text-base"></i>
+                        <span class="hidden md:inline lg:inline">Bản đồ 50 Ngày</span>
+                    </button>
+                    <button onclick="switchTab('settings')" id="btn-tab-settings"
+                        class="tab-btn flex-1 lg:flex-none flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-slate-500 hover:text-pink-600 hover:bg-white/80">
+                        <i class="fa-solid fa-palette text-base"></i>
+                        <span class="hidden md:inline lg:inline">Cấu hình mục tiêu</span>
+                    </button>
+                </nav>
+
+                <!-- Quick Motivation Card (Aesthetic Serif) -->
+                <div class="glass-panel rounded-2xl p-5 hidden lg:block mt-auto text-xs text-slate-500">
+                    <i class="fa-solid fa-quote-left text-pink-300 text-xl block mb-2"></i>
+                    <p id="motivation-quote" class="italic font-serif text-slate-600 leading-relaxed">"Kỷ luật không
+                        phải là giam cầm, mà là cầu nối giúp đưa bạn đến với phiên bản tự do thực thụ nhất."</p>
+                    <span class="block mt-2 font-bold text-slate-700">- Khuyết Danh</span>
+                </div>
+            </aside>
+
+            <!-- MAIN CONTENT PANEL -->
+            <main class="lg:col-span-9 flex flex-col gap-6">
+
+                <!-- TAB 1: DASHBOARD OVERVIEW -->
+                <section id="tab-dashboard" class="tab-content flex flex-col gap-6">
+                    <!-- Overview Header -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-2xl font-black text-slate-800 font-serif">Bảng Điều Khiển Tổng Quan</h2>
+                            <p class="text-sm text-slate-500">Theo dõi chi tiết 4 khía cạnh rèn luyện với các thói quen
+                                3 cấp độ.</p>
+                        </div>
+                        <!-- General Status Indicators -->
+                        <div
+                            class="flex items-center gap-4 bg-white/60 p-3 rounded-2xl border border-pink-100/60 shadow-sm">
+                            <div class="text-center px-4 border-r border-pink-100/50">
+                                <span class="block text-[10px] text-slate-500 uppercase font-bold tracking-wider">Chỉ số
+                                    kỷ luật</span>
+                                <span id="discipline-index" class="text-xl font-black text-pink-600">0%</span>
+                            </div>
+                            <div class="text-center px-4">
+                                <span class="block text-[10px] text-slate-500 uppercase font-bold tracking-wider">Ngày
+                                    Hiện Tại</span>
+                                <span id="challenge-day-index" class="text-xl font-black text-amber-600">Day
+                                    --/50</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4 GOAL ASPECT CARDS -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                        <!-- FINANCE CARD -->
+                        <div
+                            class="glass-panel rounded-3xl p-5 flex flex-col justify-between relative overflow-hidden group hover:border-pink-300 transition-all duration-300">
+                            <div class="absolute -top-10 -right-10 w-24 h-24 bg-amber-100/50 rounded-full blur-xl">
+                            </div>
+                            <div class="flex justify-between items-start z-10 border-b border-pink-100/40 pb-3 mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-lg shadow-sm">
+                                        <i class="fa-solid fa-sack-dollar"></i>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-1.5">
+                                            <h3 class="font-extrabold text-slate-800">Tài Chính (Finance)</h3>
+                                            <span id="star-finance" class="hidden text-amber-500 text-sm"
+                                                title="Khía cạnh ưu tiên"><i
+                                                    class="fa-solid fa-star animate-bounce"></i></span>
+                                        </div>
+                                        <p class="text-xs text-amber-600 font-bold" id="dash-goal-finance">Mục tiêu:
+                                            Đang cập nhật...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 3 Level Habits Progress within Finance -->
+                            <div class="space-y-4 z-10">
+                                <!-- Easy Habit Row -->
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-700 flex items-center gap-1.5">
+                                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                            Easy: <span class="font-medium text-slate-500 italic"
+                                                id="dash-habit-title-finance-easy">...</span>
+                                        </span>
+                                        <span id="dash-habit-pct-finance-easy" class="font-bold text-emerald-600">0/45
+                                            ngày</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                        <div id="dash-habit-progress-finance-easy"
+                                            class="bg-emerald-400 h-full rounded-full transition-all" style="width: 0%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Medium Habit Row -->
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-700 flex items-center gap-1.5">
+                                            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                                            Medium: <span class="font-medium text-slate-500 italic"
+                                                id="dash-habit-title-finance-medium">...</span>
+                                        </span>
+                                        <span id="dash-habit-pct-finance-medium" class="font-bold text-amber-600">0/30
+                                            ngày</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                        <div id="dash-habit-progress-finance-medium"
+                                            class="bg-amber-400 h-full rounded-full transition-all" style="width: 0%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Hard Habit Row -->
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-700 flex items-center gap-1.5">
+                                            <span class="w-2 h-2 rounded-full bg-pink-500"></span>
+                                            Hard: <span class="font-medium text-slate-500 italic"
+                                                id="dash-habit-title-finance-hard">...</span>
+                                        </span>
+                                        <span id="dash-habit-pct-finance-hard" class="font-bold text-pink-600">0/25
+                                            ngày</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                        <div id="dash-habit-progress-finance-hard"
+                                            class="bg-pink-500 h-full rounded-full transition-all" style="width: 0%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PERSONAL CARD -->
+                        <div
+                            class="glass-panel rounded-3xl p-5 flex flex-col justify-between relative overflow-hidden group hover:border-pink-300 transition-all duration-300">
+                            <div class="absolute -top-10 -right-10 w-24 h-24 bg-pink-100/50 rounded-full blur-xl"></div>
+                            <div class="flex justify-between items-start z-10 border-b border-pink-100/40 pb-3 mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-lg shadow-sm">
+                                        <i class="fa-solid fa-heartpulse"></i>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-1.5">
+                                            <h3 class="font-extrabold text-slate-800">Cá Nhân (Personal)</h3>
+                                            <span id="star-personal" class="hidden text-amber-500 text-sm"
+                                                title="Khía cạnh ưu tiên"><i
+                                                    class="fa-solid fa-star animate-bounce"></i></span>
+                                        </div>
+                                        <p class="text-xs text-pink-600 font-bold" id="dash-goal-personal">Mục tiêu:
+                                            Đang cập nhật...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 3 Level Habits Progress within Personal -->
+                            <div class="space-y-4 z-10">
+                                <!-- Easy Habit Row -->
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-700 flex items-center gap-1.5">
+                                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                            Easy: <span class="font-medium text-slate-500 italic"
+                                                id="dash-habit-title-personal-easy">...</span>
+                                        </span>
+                                        <span id="dash-habit-pct-personal-easy" class="font-bold text-emerald-600">0/45
+                                            ngày</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                        <div id="dash-habit-progress-personal-easy"
+                                            class="bg-emerald-400 h-full rounded-full transition-all" style="width: 0%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Medium Habit Row -->
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-700 flex items-center gap-1.5">
+                                            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                                            Medium: <span class="font-medium text-slate-500 italic"
+                                                id="dash-habit-title-personal-medium">...</span>
+                                        </span>
+                                        <span id="dash-habit-pct-personal-medium" class="font-bold text-amber-600">0/30
+                                            ngày</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                        <div id="dash-habit-progress-personal-medium"
+                                            class="bg-amber-400 h-full rounded-full transition-all" style="width: 0%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Hard Habit Row -->
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-700 flex items-center gap-1.5">
+                                            <span class="w-2 h-2 rounded-full bg-pink-500"></span>
+                                            Hard: <span class="font-medium text-slate-500 italic"
+                                                id="dash-habit-title-personal-hard">...</span>
+                                        </span>
+                                        <span id="dash-habit-pct-personal-hard" class="font-bold text-pink-600">0/25
+                                            ngày</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                        <div id="dash-habit-progress-personal-hard"
+                                            class="bg-pink-500 h-full rounded-full transition-all" style="width: 0%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PROFESSIONAL CARD -->
+                        <div
+                            class="glass-panel rounded-3xl p-5 flex flex-col justify-between relative overflow-hidden group hover:border-pink-300 transition-all duration-300">
+                            <div class="absolute -top-10 -right-10 w-24 h-24 bg-amber-100/50 rounded-full blur-xl">
+                            </div>
+                            <div class="flex justify-between items-start z-10 border-b border-pink-100/40 pb-3 mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-lg shadow-sm">
+                                        <i class="fa-solid fa-graduation-cap"></i>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-1.5">
+                                            <h3 class="font-extrabold text-slate-800">Sự Nghiệp (Professional)</h3>
+                                            <span id="star-professional" class="hidden text-amber-500 text-sm"
+                                                title="Khía cạnh ưu tiên"><i
+                                                    class="fa-solid fa-star animate-bounce"></i></span>
+                                        </div>
+                                        <p class="text-xs text-amber-600 font-bold" id="dash-goal-professional">Mục
+                                            tiêu: Đang cập nhật...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 3 Level Habits Progress within Professional -->
+                            <div class="space-y-4 z-10">
+                                <!-- Easy Habit Row -->
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-700 flex items-center gap-1.5">
+                                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                            Easy: <span class="font-medium text-slate-500 italic"
+                                                id="dash-habit-title-professional-easy">...</span>
+                                        </span>
+                                        <span id="dash-habit-pct-professional-easy"
+                                            class="font-bold text-emerald-600">0/45 ngày</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                        <div id="dash-habit-progress-professional-easy"
+                                            class="bg-emerald-400 h-full rounded-full transition-all" style="width: 0%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Medium Habit Row -->
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-700 flex items-center gap-1.5">
+                                            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                                            Medium: <span class="font-medium text-slate-500 italic"
+                                                id="dash-habit-title-professional-medium">...</span>
+                                        </span>
+                                        <span id="dash-habit-pct-professional-medium"
+                                            class="font-bold text-amber-600">0/30 ngày</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                        <div id="dash-habit-progress-professional-medium"
+                                            class="bg-amber-400 h-full rounded-full transition-all" style="width: 0%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Hard Habit Row -->
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-700 flex items-center gap-1.5">
+                                            <span class="w-2 h-2 rounded-full bg-pink-500"></span>
+                                            Hard: <span class="font-medium text-slate-500 italic"
+                                                id="dash-habit-title-professional-hard">...</span>
+                                        </span>
+                                        <span id="dash-habit-pct-professional-hard" class="font-bold text-pink-600">0/25
+                                            ngày</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                        <div id="dash-habit-progress-professional-hard"
+                                            class="bg-pink-500 h-full rounded-full transition-all" style="width: 0%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RELATIONSHIP CARD -->
+                        <div
+                            class="glass-panel rounded-3xl p-5 flex flex-col justify-between relative overflow-hidden group hover:border-pink-300 transition-all duration-300">
+                            <div class="absolute -top-10 -right-10 w-24 h-24 bg-pink-100/50 rounded-full blur-xl"></div>
+                            <div class="flex justify-between items-start z-10 border-b border-pink-100/40 pb-3 mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-lg shadow-sm">
+                                        <i class="fa-solid fa-people-gentry"></i>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-1.5">
+                                            <h3 class="font-extrabold text-slate-800">Mối Quan Hệ (Relationship)</h3>
+                                            <span id="star-relationship" class="hidden text-amber-500 text-sm"
+                                                title="Khía cạnh ưu tiên"><i
+                                                    class="fa-solid fa-star animate-bounce"></i></span>
+                                        </div>
+                                        <p class="text-xs text-pink-600 font-bold" id="dash-goal-relationship">Mục tiêu:
+                                            Đang cập nhật...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 3 Level Habits Progress within Relationship -->
+                            <div class="space-y-4 z-10">
+                                <!-- Easy Habit Row -->
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-700 flex items-center gap-1.5">
+                                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                            Easy: <span class="font-medium text-slate-500 italic"
+                                                id="dash-habit-title-relationship-easy">...</span>
+                                        </span>
+                                        <span id="dash-habit-pct-relationship-easy"
+                                            class="font-bold text-emerald-600">0/45 ngày</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                        <div id="dash-habit-progress-relationship-easy"
+                                            class="bg-emerald-400 h-full rounded-full transition-all" style="width: 0%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Medium Habit Row -->
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-700 flex items-center gap-1.5">
+                                            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                                            Medium: <span class="font-medium text-slate-500 italic"
+                                                id="dash-habit-title-relationship-medium">...</span>
+                                        </span>
+                                        <span id="dash-habit-pct-relationship-medium"
+                                            class="font-bold text-amber-600">0/30 ngày</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                        <div id="dash-habit-progress-relationship-medium"
+                                            class="bg-amber-400 h-full rounded-full transition-all" style="width: 0%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Hard Habit Row -->
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-700 flex items-center gap-1.5">
+                                            <span class="w-2 h-2 rounded-full bg-pink-500"></span>
+                                            Hard: <span class="font-medium text-slate-500 italic"
+                                                id="dash-habit-title-relationship-hard">...</span>
+                                        </span>
+                                        <span id="dash-habit-pct-relationship-hard" class="font-bold text-pink-600">0/25
+                                            ngày</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                        <div id="dash-habit-progress-relationship-hard"
+                                            class="bg-pink-500 h-full rounded-full transition-all" style="width: 0%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QUICK SUMMARY BOXES -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="glass-panel rounded-2xl p-4 flex items-center gap-4">
+                            <div
+                                class="w-11 h-11 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-lg shrink-0">
+                                <i class="fa-solid fa-crown"></i>
+                            </div>
+                            <div>
+                                <span class="block text-[10px] text-slate-500 font-bold uppercase tracking-wider">Khía
+                                    Cạnh Trọng Tâm ⭐</span>
+                                <span id="summary-priority-goal" class="text-sm font-bold text-slate-800">Đang cập
+                                    nhật...</span>
+                            </div>
+                        </div>
+                        <div class="glass-panel rounded-2xl p-4 flex items-center gap-4">
+                            <div
+                                class="w-11 h-11 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-lg shrink-0">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </div>
+                            <div>
+                                <span class="block text-[10px] text-slate-500 font-bold uppercase tracking-wider">Thời
+                                    Thời Gian Bắt Đầu</span>
+                                <span id="summary-start-date" class="text-sm font-bold text-slate-800">--/--/----</span>
+                            </div>
+                        </div>
+                        <div class="glass-panel rounded-2xl p-4 flex items-center gap-4">
+                            <div
+                                class="w-11 h-11 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-lg shrink-0">
+                                <i class="fa-solid fa-hourglass-end"></i>
+                            </div>
+                            <div>
+                                <span class="block text-[10px] text-slate-500 font-bold uppercase tracking-wider">Ngày
+                                    Kết Thúc Dự Kiến</span>
+                                <span id="summary-end-date" class="text-sm font-bold text-slate-800">--/--/----</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 2: TODAY'S TASKS & HABITS & DAILY JOURNAL -->
+                <section id="tab-today" class="tab-content hidden flex flex-col gap-6">
+                    <!-- Tab Header -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-2xl font-black text-slate-800 font-serif flex items-center gap-2">
+                                <i class="fa-solid fa-feather-pointed text-pink-500"></i> Việc Cần Làm Hôm Nay
+                            </h2>
+                            <p class="text-sm text-slate-500" id="today-panel-date">Thử thách ngày: Day -- (Thứ --,
+                                --/--/----)</p>
+                        </div>
+                        <!-- Quick action -->
+                        <button onclick="openAddTaskModal('today')"
+                            class="bg-gradient-to-r from-pink-500 to-amber-500 hover:from-pink-600 hover:to-amber-600 text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow-md shadow-pink-200 transition-all active:scale-95">
+                            <i class="fa-solid fa-plus mr-1.5"></i> Thêm việc cá nhân
+                        </button>
+                    </div>
+
+                    <!-- Section: Yesterday Habit Missed Indicators (Red Xs) -->
+                    <div id="yesterday-habits-missed-alert"
+                        class="hidden p-4 bg-red-50/80 border border-red-200 rounded-2xl">
+                        <h4 class="font-bold text-red-600 text-xs uppercase mb-2.5 flex items-center gap-2">
+                            <i class="fa-solid fa-triangle-exclamation animate-pulse"></i> Thói Quen Bỏ Lỡ Ngày Hôm Qua
+                            (X Đỏ - Đã khóa quá khứ)
+                        </h4>
+                        <div id="yesterday-habits-missed-list"
+                            class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-700">
+                            <!-- Red Xs populated here dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Section A: 3 Level Habits grouped by Aspect -->
+                    <div class="glass-panel rounded-3xl p-5">
+                        <h3
+                            class="font-bold text-xs tracking-wider text-slate-500 uppercase mb-4 flex items-center gap-2">
+                            <span class="w-1.5 h-4 bg-pink-500 rounded"></span> Thói Quen Kỷ Luật Hôm Nay (4 khía cạnh x
+                            3 cấp độ)
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="today-habits-container">
+                            <!-- Dynamic grid of 4 goal cards with 3 checkboxes each -->
+                        </div>
+                    </div>
+
+                    <!-- Section B: Carryover / Overdue Tasks -->
+                    <div class="glass-panel rounded-3xl p-5 border-amber-200 bg-amber-50/50 relative overflow-hidden"
+                        id="carryover-section">
+                        <div class="absolute top-0 right-0 p-4 opacity-10">
+                            <i class="fa-solid fa-business-time text-6xl text-amber-500"></i>
+                        </div>
+                        <h3
+                            class="font-bold text-xs tracking-wider text-amber-700 uppercase mb-4 flex items-center gap-2">
+                            <span class="w-1.5 h-4 bg-amber-400 rounded animate-pulse"></span> Việc Chưa Làm Từ Hôm Qua
+                            (Cộng Dồn Nhiệm Vụ)
+                        </h3>
+                        <div class="flex flex-col gap-3" id="carryover-tasks-container">
+                            <!-- Overdue tasks will append here -->
+                        </div>
+                    </div>
+
+                    <!-- Section C: Daily One-time Tasks -->
+                    <div class="glass-panel rounded-3xl p-5">
+                        <h3
+                            class="font-bold text-xs tracking-wider text-slate-500 uppercase mb-4 flex items-center gap-2">
+                            <span class="w-1.5 h-4 bg-pink-400 rounded"></span> Việc Cá Nhân Khác Trong Ngày
+                        </h3>
+                        <div class="flex flex-col gap-3" id="today-tasks-container">
+                            <!-- Dynamic personal tasks list -->
+                        </div>
+                    </div>
+
+                    <!-- Section D: TODAY'S JOURNAL INPUT -->
+                    <div class="glass-panel rounded-3xl p-5 border-pink-200/50">
+                        <h3
+                            class="font-bold text-xs tracking-wider text-slate-700 uppercase mb-3 flex items-center justify-between">
+                            <span class="flex items-center gap-2">
+                                <span class="w-1.5 h-4 bg-pink-400 rounded"></span> Nhật Ký Kỷ Luật Hôm Nay
+                            </span>
+                            <span id="journal-lock-status"
+                                class="text-xs text-pink-600 font-bold flex items-center gap-1">
+                                <i class="fa-solid fa-lock-open animate-bounce"></i> Đang mở chỉnh sửa
+                            </span>
+                        </h3>
+                        <p class="text-xs text-slate-500 mb-3 leading-relaxed">Hãy ghi lại cảm xúc, trở ngại và chiến
+                            thắng nhỏ của bạn. Sang ngày mới, hệ thống sẽ tự động đóng băng và khoá trang nhật ký này
+                            mãi mãi.</p>
+                        <textarea id="today-journal-textarea" oninput="saveTodayJournalOnInput()"
+                            placeholder="Hôm nay tâm trạng của bạn ra sao? Bạn đã vượt qua sự lười biếng như thế nào?..."
+                            class="w-full h-32 bg-white/60 border border-pink-100 rounded-2xl px-4 py-3 text-sm text-slate-700 focus:outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400 transition-all shadow-inner"></textarea>
+                        <div class="flex justify-end mt-2.5">
+                            <button onclick="saveTodayJournalManual()"
+                                class="bg-gradient-to-r from-pink-500 to-amber-500 hover:from-pink-600 hover:to-amber-600 text-white font-bold text-xs px-5 py-2 rounded-xl transition-all flex items-center gap-1.5 shadow-md shadow-pink-200">
+                                <i class="fa-solid fa-heart mr-0.5"></i> Lưu Nhật Ký
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 3: WEEK & MONTH CALENDAR PLANNER -->
+                <section id="tab-calendar" class="tab-content hidden flex flex-col gap-6">
+                    <!-- Header -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-2xl font-black text-slate-800 font-serif">Bản Đồ Hành Trình 50 Ngày</h2>
+                            <p class="text-sm text-slate-500">Bấm ngày tương lai để lên kế hoạch trước. Bấm ngày cũ để
+                                xem lại nhật ký & thói quen đã lưu.</p>
+                        </div>
+                        <!-- View toggle -->
+                        <div
+                            class="flex bg-pink-100/50 p-1 rounded-2xl border border-pink-200/30 shrink-0 shadow-inner">
+                            <button onclick="toggleCalendarView('month')" id="btn-view-month"
+                                class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white text-pink-600 shadow-sm border border-pink-200/20">
+                                Toàn Bộ (50 Ngày)
+                            </button>
+                            <button onclick="toggleCalendarView('week')" id="btn-view-week"
+                                class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-500 hover:text-pink-600">
+                                Tuần Hiện Tại
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Legends -->
+                    <div
+                        class="flex flex-wrap items-center gap-4 text-xs bg-white/60 p-3.5 rounded-2xl border border-pink-100/60 shadow-sm">
+                        <span class="text-slate-500 font-medium">Chú thích trạng thái ngày:</span>
+                        <span class="flex items-center gap-1.5"><span
+                                class="w-3.5 h-3.5 rounded bg-emerald-100 border border-emerald-300"></span> Đã rèn
+                            luyện tốt (≥6 việc)</span>
+                        <span class="flex items-center gap-1.5"><span
+                                class="w-3.5 h-3.5 rounded bg-amber-100 border border-amber-300"></span> Đạt trung bình
+                            (3-5 việc)</span>
+                        <span class="flex items-center gap-1.5"><span
+                                class="w-3.5 h-3.5 rounded bg-pink-100 border border-pink-300"></span> Bỏ lỡ nhiều (0-2
+                            việc)</span>
+                        <span class="flex items-center gap-1.5"><span
+                                class="w-3.5 h-3.5 rounded border-2 border-pink-400 bg-white shadow-sm"></span> Hôm
+                            nay</span>
+                        <span class="flex items-center gap-1.5"><span
+                                class="w-3.5 h-3.5 rounded bg-slate-50 border border-slate-200"></span> Ngày tiếp
+                            theo</span>
+                    </div>
+
+                    <!-- Calendar Content Panel -->
+                    <div class="glass-panel rounded-3xl p-6" id="calendar-view-container">
+                        <!-- Dynamic Grid 50 days -->
+                        <div id="grid-50-days"
+                            class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-4">
+                            <!-- Day boxes are injected here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 4: SETTINGS & TARGETS -->
+                <section id="tab-settings" class="tab-content hidden flex flex-col gap-6">
+                    <!-- Tab Header -->
+                    <div>
+                        <h2 class="text-2xl font-black text-slate-800 font-serif">Cấu Hình 50 Ngày Kỷ Luật</h2>
+                        <p class="text-sm text-slate-500">Định cấu hình các mục tiêu cốt lõi và thói quen 3 cấp độ cho
+                            từng khía cạnh.</p>
+                    </div>
+
+                    <!-- Warning Alert -->
+                    <div
+                        class="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-amber-800 text-xs flex gap-3 items-start leading-relaxed shadow-sm">
+                        <i class="fa-solid fa-triangle-exclamation text-lg mt-0.5 text-amber-600"></i>
+                        <div>
+                            <strong class="block font-extrabold mb-1">QUY TẮC SẮT ĐÁ:</strong>
+                            <span>Khi bạn đã thực hiện thử thách, hãy cố gắng giữ nguyên thói quen đã cài đặt nhằm rèn
+                                luyện sự nhất quán tuyệt đối. Nhấn "Lưu Cấu Hình" sau khi thay đổi để áp dụng.</span>
+                        </div>
+                    </div>
+
+                    <!-- Configuration Panels -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Challenge Timeline -->
+                        <div class="glass-panel rounded-3xl p-5 flex flex-col gap-4">
+                            <h3
+                                class="font-bold text-xs tracking-wider text-slate-500 uppercase flex items-center gap-2">
+                                <i class="fa-solid fa-hourglass-start text-pink-500"></i> Thời Gian Thử Thách
+                            </h3>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 mb-1.5">Ngày Bắt Đầu:</label>
+                                <input type="date" id="settings-start-date" onchange="onStartDateChange()"
+                                    class="w-full bg-white/80 border border-pink-100 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-pink-400 text-sm shadow-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 mb-1.5">Ngày Kết Thúc (Hệ thống
+                                    tự tính):</label>
+                                <input type="date" id="settings-end-date" disabled
+                                    class="w-full bg-slate-50 border border-slate-200 text-slate-400 rounded-xl px-4 py-3 text-sm cursor-not-allowed">
+                            </div>
+                        </div>
+
+                        <!-- Priority Choice & Habit levels rules info -->
+                        <div class="glass-panel rounded-3xl p-5 flex flex-col gap-4">
+                            <h3
+                                class="font-bold text-xs tracking-wider text-slate-500 uppercase flex items-center gap-2">
+                                <i class="fa-solid fa-ribbon text-amber-500"></i> Chỉ Tiêu Đích Đến
+                            </h3>
+                            <div class="text-xs space-y-3 text-slate-700 font-medium">
+                                <div
+                                    class="flex items-center justify-between p-2.5 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-800">
+                                    <span>CẤP DỄ (Easy)</span>
+                                    <span>Cần hoàn thành ≥ <strong>45 / 50 ngày</strong></span>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-amber-800">
+                                    <span>CẤP VỪA (Medium)</span>
+                                    <span>Cần hoàn thành ≥ <strong>30 / 50 ngày</strong></span>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between p-2.5 bg-pink-50 rounded-xl border border-pink-200 text-pink-800">
+                                    <span>CẤP KHÓ (Hard)</span>
+                                    <span>Cần hoàn thành ≥ <strong>25 / 50 ngày</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Edit 4 Goals & 12 Habit Level details -->
+                    <div class="glass-panel rounded-3xl p-6 flex flex-col gap-8">
+                        <h3 class="font-bold text-xs tracking-wider text-slate-500 uppercase flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-pink-500"></i> Thiết Lập 4 Khía Cạnh Cuộc Sống
+                        </h3>
+
+                        <!-- FINANCE SETTINGS -->
+                        <div class="border-b border-pink-100 pb-6">
+                            <div
+                                class="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between mb-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3.5 h-3.5 rounded-full bg-amber-400"></span>
+                                    <h4 class="font-extrabold text-slate-800 text-base">Finance (Tài Chính)</h4>
+                                </div>
+                                <label
+                                    class="flex items-center gap-1.5 text-xs text-slate-600 font-bold cursor-pointer bg-amber-50 border border-amber-200 px-3.5 py-2 rounded-xl hover:bg-amber-100/50 transition-all">
+                                    <input type="radio" name="priorityGoal" value="finance" class="accent-amber-500"
+                                        onchange="onPriorityGoalChange('finance')">
+                                    <span>Đặt làm Trọng tâm ⭐</span>
+                                </label>
+                            </div>
+                            <div class="space-y-3">
+                                <div>
+                                    <label
+                                        class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Mục
+                                        tiêu cốt lõi khía cạnh Tài Chính:</label>
+                                    <input type="text" id="settings-goal-finance"
+                                        placeholder="Ví dụ: Tích lũy 12 triệu dọn ra ở riêng"
+                                        class="w-full bg-white/80 border border-pink-100 rounded-xl px-4 py-2.5 text-slate-800 text-sm focus:border-amber-400">
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                    <div>
+                                        <label
+                                            class="block text-[10px] font-bold text-emerald-600 uppercase tracking-wider mb-1">Thói
+                                            quen Easy (Đạt ≥45 ngày):</label>
+                                        <input type="text" id="settings-habit-finance-easy"
+                                            placeholder="Ví dụ: Ghi chép chi tiêu chi tiết hàng ngày"
+                                            class="w-full bg-white/80 border border-pink-100 rounded-xl px-3 py-2 text-slate-800 text-xs">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-[10px] font-bold text-amber-600 uppercase tracking-wider mb-1">Thói
+                                            quen Medium (Đạt ≥30 ngày):</label>
+                                        <input type="text" id="settings-habit-finance-medium"
+                                            placeholder="Ví dụ: Kiểm tra tài sản trong app chứng khoán"
+                                            class="w-full bg-white/80 border border-pink-100 rounded-xl px-3 py-2 text-slate-800 text-xs">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-[10px] font-bold text-pink-600 uppercase tracking-wider mb-1">Thói
+                                            quen Hard (Đạt ≥25 ngày):</label>
+                                        <input type="text" id="settings-habit-finance-hard"
+                                            placeholder="Ví dụ: Học 30 phút về đầu tư/tài chính"
+                                            class="w-full bg-white/80 border border-pink-100 rounded-xl px-3 py-2 text-slate-800 text-xs">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PERSONAL SETTINGS -->
+                        <div class="border-b border-pink-100 pb-6">
+                            <div
+                                class="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between mb-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3.5 h-3.5 rounded-full bg-pink-400"></span>
+                                    <h4 class="font-extrabold text-slate-800 text-base">Personal (Cá Nhân & Sức Khỏe)
+                                    </h4>
+                                </div>
+                                <label
+                                    class="flex items-center gap-1.5 text-xs text-slate-600 font-bold cursor-pointer bg-pink-50 border border-pink-200 px-3.5 py-2 rounded-xl hover:bg-pink-100/50 transition-all">
+                                    <input type="radio" name="priorityGoal" value="personal" class="accent-pink-500"
+                                        onchange="onPriorityGoalChange('personal')">
+                                    <span>Đặt làm Trọng tâm ⭐</span>
+                                </label>
+                            </div>
+                            <div class="space-y-3">
+                                <div>
+                                    <label
+                                        class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Mục
+                                        tiêu cốt lõi khía cạnh Cá Nhân:</label>
+                                    <input type="text" id="settings-goal-personal"
+                                        placeholder="Ví dụ: Giảm 3kg mỡ thừa & cải thiện sự tập trung"
+                                        class="w-full bg-white/80 border border-pink-100 rounded-xl px-4 py-2.5 text-slate-800 text-sm focus:border-pink-400">
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                    <div>
+                                        <label
+                                            class="block text-[10px] font-bold text-emerald-600 uppercase tracking-wider mb-1">Thói
+                                            quen Easy (Đạt ≥45 ngày):</label>
+                                        <input type="text" id="settings-habit-personal-easy"
+                                            placeholder="Ví dụ: Uống đủ 2L nước lọc"
+                                            class="w-full bg-white/80 border border-pink-100 rounded-xl px-3 py-2 text-slate-800 text-xs">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-[10px] font-bold text-amber-600 uppercase tracking-wider mb-1">Thói
+                                            quen Medium (Đạt ≥30 ngày):</label>
+                                        <input type="text" id="settings-habit-personal-medium"
+                                            placeholder="Ví dụ: Tập thể dục/Squat 15 phút"
+                                            class="w-full bg-white/80 border border-pink-100 rounded-xl px-3 py-2 text-slate-800 text-xs">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-[10px] font-bold text-pink-600 uppercase tracking-wider mb-1">Thói
+                                            quen Hard (Đạt ≥25 ngày):</label>
+                                        <input type="text" id="settings-habit-personal-hard"
+                                            placeholder="Ví dụ: Tập thiền sâu 15 phút trước khi ngủ"
+                                            class="w-full bg-white/80 border border-pink-100 rounded-xl px-3 py-2 text-slate-800 text-xs">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PROFESSIONAL SETTINGS -->
+                        <div class="border-b border-pink-100 pb-6">
+                            <div
+                                class="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between mb-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3.5 h-3.5 rounded-full bg-amber-400"></span>
+                                    <h4 class="font-extrabold text-slate-800 text-base">Professional (Sự Nghiệp & Kỹ
+                                        Năng)</h4>
+                                </div>
+                                <label
+                                    class="flex items-center gap-1.5 text-xs text-slate-600 font-bold cursor-pointer bg-amber-50 border border-amber-200 px-3.5 py-2 rounded-xl hover:bg-amber-100/50 transition-all">
+                                    <input type="radio" name="priorityGoal" value="professional"
+                                        class="accent-amber-500" onchange="onPriorityGoalChange('professional')">
+                                    <span>Đặt làm Trọng tâm ⭐</span>
+                                </label>
+                            </div>
+                            <div class="space-y-3">
+                                <div>
+                                    <label
+                                        class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Mục
+                                        tiêu cốt lõi khía cạnh Sự Nghiệp:</label>
+                                    <input type="text" id="settings-goal-professional"
+                                        placeholder="Ví dụ: Hoàn thành khóa học Front-End Senior"
+                                        class="w-full bg-white/80 border border-pink-100 rounded-xl px-4 py-2.5 text-slate-800 text-sm focus:border-amber-400">
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                    <div>
+                                        <label
+                                            class="block text-[10px] font-bold text-emerald-600 uppercase tracking-wider mb-1">Thói
+                                            quen Easy (Đạt ≥45 ngày):</label>
+                                        <input type="text" id="settings-habit-professional-easy"
+                                            placeholder="Ví dụ: Đọc 1 bài blog công nghệ/kỹ thuật"
+                                            class="w-full bg-white/80 border border-pink-100 rounded-xl px-3 py-2 text-slate-800 text-xs">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-[10px] font-bold text-amber-600 uppercase tracking-wider mb-1">Thói
+                                            quen Medium (Đạt ≥30 ngày):</label>
+                                        <input type="text" id="settings-habit-professional-medium"
+                                            placeholder="Ví dụ: Giải 1 bài thuật toán Leetcode"
+                                            class="w-full bg-white/80 border border-pink-100 rounded-xl px-3 py-2 text-slate-800 text-xs">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-[10px] font-bold text-pink-600 uppercase tracking-wider mb-1">Thói
+                                            quen Hard (Đạt ≥25 ngày):</label>
+                                        <input type="text" id="settings-habit-professional-hard"
+                                            placeholder="Ví dụ: Dành 1 tiếng code dự án cá nhân"
+                                            class="w-full bg-white/80 border border-pink-100 rounded-xl px-3 py-2 text-slate-800 text-xs">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RELATIONSHIP SETTINGS -->
+                        <div>
+                            <div
+                                class="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between mb-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3.5 h-3.5 rounded-full bg-pink-400"></span>
+                                    <h4 class="font-extrabold text-slate-800 text-base">Relationship (Mối Quan Hệ)</h4>
+                                </div>
+                                <label
+                                    class="flex items-center gap-1.5 text-xs text-slate-600 font-bold cursor-pointer bg-pink-50 border border-pink-200 px-3.5 py-2 rounded-xl hover:bg-pink-100/50 transition-all">
+                                    <input type="radio" name="priorityGoal" value="relationship" class="accent-pink-500"
+                                        onchange="onPriorityGoalChange('relationship')">
+                                    <span>Đặt làm Trọng tâm ⭐</span>
+                                </label>
+                            </div>
+                            <div class="space-y-3">
+                                <div>
+                                    <label
+                                        class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Mục
+                                        tiêu cốt lõi khía cạnh Quan Hệ:</label>
+                                    <input type="text" id="settings-goal-relationship"
+                                        placeholder="Ví dụ: Kết nối thân thiết hơn với gia đình"
+                                        class="w-full bg-white/80 border border-pink-100 rounded-xl px-4 py-2.5 text-slate-800 text-sm focus:border-pink-400">
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                    <div>
+                                        <label
+                                            class="block text-[10px] font-bold text-emerald-600 uppercase tracking-wider mb-1">Thói
+                                            quen Easy (Đạt ≥45 ngày):</label>
+                                        <input type="text" id="settings-habit-relationship-easy"
+                                            placeholder="Ví dụ: Nhắn tin chúc ngày mới hỏi thăm"
+                                            class="w-full bg-white/80 border border-pink-100 rounded-xl px-3 py-2 text-slate-800 text-xs">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-[10px] font-bold text-amber-600 uppercase tracking-wider mb-1">Thói
+                                            quen Medium (Đạt ≥30 ngày):</label>
+                                        <input type="text" id="settings-habit-relationship-medium"
+                                            placeholder="Ví dụ: Gọi điện tâm sự với bố mẹ"
+                                            class="w-full bg-white/80 border border-pink-100 rounded-xl px-3 py-2 text-slate-800 text-xs">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-[10px] font-bold text-pink-600 uppercase tracking-wider mb-1">Thói
+                                            quen Hard (Đạt ≥25 ngày):</label>
+                                        <input type="text" id="settings-habit-relationship-hard"
+                                            placeholder="Ví dụ: Giúp đỡ người thân thiết thực"
+                                            class="w-full bg-white/80 border border-pink-100 rounded-xl px-3 py-2 text-slate-800 text-xs">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="saveAllSettings()"
+                            class="w-full bg-gradient-to-r from-pink-500 to-amber-500 hover:from-pink-600 hover:to-amber-600 text-white font-extrabold py-4 rounded-2xl text-sm transition-all shadow-md shadow-pink-200 active:scale-95">
+                            <i class="fa-solid fa-cloud-arrow-up mr-1.5"></i> Lưu Cấu Hình & Áp Dụng Cho Thử Thách
+                        </button>
+                    </div>
+
+                    <!-- Danger Zone (Restart Button) -->
+                    <div
+                        class="glass-panel rounded-3xl p-5 border-red-200 bg-red-50/50 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-lg shrink-0">
+                                <i class="fa-solid fa-arrows-rotate"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-extrabold text-red-800 text-sm">Vùng Khởi Động Lại</h4>
+                                <p class="text-xs text-slate-500">Bắt đầu một chu kỳ rèn luyện 50 ngày kỷ luật sắt hoàn
+                                    toàn mới. Dữ liệu cũ sẽ bị xóa bỏ.</p>
+                            </div>
+                        </div>
+                        <button onclick="triggerResetChallenge()"
+                            class="bg-red-500 hover:bg-red-600 active:scale-95 text-white font-bold px-5 py-3 rounded-xl text-xs transition-all whitespace-nowrap shadow-sm">
+                            <i class="fa-solid fa-power-off mr-1.5"></i> Khởi động lại thử thách
+                        </button>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="border-t border-pink-100/40 py-6 text-center text-xs text-slate-400">
+            <p>© 2026 Iron Discipline Hub. Tinh hoa rèn luyện trong từng thói quen.</p>
+        </footer>
+
+        <!-- ADD/EDIT TASK MODAL -->
+        <div id="task-modal"
+            class="fixed inset-0 bg-slate-900/40 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+            <div class="bg-white border border-pink-100 rounded-3xl w-full max-w-md p-6 relative shadow-2xl">
+                <button onclick="closeTaskModal()"
+                    class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-all">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+                <h3 class="text-lg font-black text-slate-800 mb-4 flex items-center gap-2 font-serif">
+                    <i class="fa-solid fa-calendar-plus text-pink-500"></i> <span id="modal-title-text">Lên kế hoạch
+                        tương lai</span>
+                </h3>
+
+                <input type="hidden" id="modal-task-date">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1.5">Ngày áp dụng:</label>
+                        <div id="modal-date-display"
+                            class="bg-pink-50 border border-pink-100 p-3 rounded-xl text-xs font-bold text-pink-700">
+                            --/--/----
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1.5">Mô tả công việc:</label>
+                        <textarea id="modal-task-desc"
+                            placeholder="Ví dụ: Đi mua đồ nấu ăn lành mạnh, nộp bài báo cáo tuần..."
+                            class="w-full h-24 bg-slate-50 border border-pink-100 rounded-2xl px-3 py-2 text-sm text-slate-700 focus:outline-none focus:border-pink-400"></textarea>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end gap-2.5 mt-6">
+                    <button onclick="closeTaskModal()"
+                        class="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:bg-slate-100 transition-all">Hủy</button>
+                    <button onclick="saveTaskModal()"
+                        class="bg-gradient-to-r from-pink-500 to-amber-500 hover:from-pink-600 hover:to-amber-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-md shadow-pink-100">Xác
+                        nhận</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- DETAIL VIEW MODAL (Xem nhật ký, thói quen & task của bất cứ ngày nào trong lịch sử) -->
+        <div id="day-detail-modal"
+            class="fixed inset-0 bg-slate-900/40 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+            <div
+                class="bg-white border border-pink-100 rounded-3xl w-full max-w-xl p-6 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+                <button onclick="closeDayDetailModal()"
+                    class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-all">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+
+                <div class="flex items-center gap-3 border-b border-pink-100 pb-4 mb-4">
+                    <div
+                        class="w-11 h-11 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-lg shrink-0 shadow-sm">
+                        <i class="fa-solid fa-book"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-black text-slate-800 flex items-center gap-2 font-serif">
+                            <span id="detail-modal-title">Ngày D-XX</span>
+                        </h3>
+                        <p id="detail-modal-subtitle" class="text-xs text-slate-500 font-semibold">Thứ --, --/--/----
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Lock Indicator -->
+                    <div id="detail-lock-indicator"
+                        class="p-3 bg-pink-50 border border-pink-200 rounded-2xl text-pink-800 text-xs flex items-center gap-2 shadow-inner">
+                        <i class="fa-solid fa-lock"></i>
+                        <span><strong>Lịch sử đã đóng băng:</strong> Bạn chỉ có thể đọc lại nhật ký và xem lại các công
+                            việc để duy trì tính trung thực tuyệt đối.</span>
+                    </div>
+
+                    <!-- Habits Section -->
+                    <div>
+                        <h4
+                            class="font-bold text-xs uppercase text-slate-400 tracking-wider mb-2.5 flex items-center gap-1.5">
+                            <span class="w-1 h-3.5 bg-pink-400 rounded"></span> Thói quen rèn luyện trong ngày
+                        </h4>
+                        <div id="detail-habits-list" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <!-- Habits checklist shown here -->
+                        </div>
+                    </div>
+
+                    <!-- One-time Tasks Section -->
+                    <div>
+                        <h4
+                            class="font-bold text-xs uppercase text-slate-400 tracking-wider mb-2.5 flex items-center gap-1.5">
+                            <span class="w-1 h-3.5 bg-amber-400 rounded"></span> Các việc cá nhân trong ngày
+                        </h4>
+                        <div id="detail-tasks-list" class="space-y-2">
+                            <!-- Tasks checklist shown here -->
+                        </div>
+                    </div>
+
+                    <!-- Daily Journal Section -->
+                    <div>
+                        <h4
+                            class="font-bold text-xs uppercase text-slate-400 tracking-wider mb-2 flex items-center gap-1.5">
+                            <span class="w-1 h-3.5 bg-pink-500 rounded"></span> Dòng nhật ký của ngày
+                        </h4>
+                        <!-- For active editable day -->
+                        <div id="detail-journal-edit-container" class="hidden space-y-2">
+                            <textarea id="detail-journal-textarea" placeholder="Hôm nay thế nào..."
+                                class="w-full h-24 bg-slate-50 border border-pink-100 rounded-2xl px-3 py-2 text-sm text-slate-700 focus:outline-none focus:border-pink-400"></textarea>
+                            <div class="flex justify-end">
+                                <button onclick="saveDetailModalJournal()"
+                                    class="bg-gradient-to-r from-pink-500 to-amber-500 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-sm">Lưu
+                                    nhật ký</button>
+                            </div>
+                        </div>
+                        <!-- For past locked days -->
+                        <div id="detail-journal-readonly"
+                            class="bg-pink-50/50 p-4 rounded-2xl border border-pink-100 text-slate-600 text-sm whitespace-pre-wrap italic min-h-[60px] relative leading-relaxed">
+                            <!-- Journal content shown here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end gap-2 mt-6 pt-4 border-t border-pink-100">
+                    <button onclick="closeDayDetailModal()"
+                        class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold transition-all">Đóng
+                        cửa sổ</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CUSTOM CONFIRMATION MODAL -->
+        <div id="confirm-modal"
+            class="fixed inset-0 bg-slate-900/40 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+            <div class="bg-white border border-red-200 rounded-3xl w-full max-w-sm p-6 relative shadow-2xl">
+                <div
+                    class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-2xl mx-auto mb-4 shadow-sm">
+                    <i class="fa-solid fa-circle-exclamation animate-bounce"></i>
+                </div>
+                <h3 class="text-base font-black text-slate-800 text-center mb-2 font-serif">Bạn chắc chắn muốn Reset
+                    chứ?</h3>
+                <p class="text-xs text-slate-500 text-center mb-6 leading-relaxed">Toàn bộ tiến độ 50 ngày, lịch sử rèn
+                    luyện và toàn bộ nhật ký kỷ luật sẽ bị xóa sạch vĩnh viễn.</p>
+                <div class="flex items-center justify-center gap-3">
+                    <button onclick="closeConfirmModal()"
+                        class="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:bg-slate-100 transition-all">Đóng</button>
+                    <button onclick="executeRestartChallenge()"
+                        class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm">Đồng
+                        ý Restart!</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FLOATING NOTIFICATION BANNER -->
+        <div id="toast-banner"
+            class="fixed bottom-6 right-6 bg-white border border-pink-200 text-pink-600 px-4 py-3 rounded-2xl shadow-xl z-50 flex items-center gap-3 transition-all transform translate-y-20 opacity-0 pointer-events-none font-semibold text-xs">
+            <i class="fa-solid fa-heart-circle-check text-pink-500 text-lg"></i>
+            <span id="toast-message" class="text-slate-700 font-bold">Đã lưu thành công!</span>
+        </div>
+
+    </div>
+
+    <!-- APP JAVASCRIPT STATE ENGINE -->
+    <script src="scripts.js"></script>
+</body>
+
+</html>
